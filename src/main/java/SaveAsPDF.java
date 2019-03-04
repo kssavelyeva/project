@@ -12,28 +12,28 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-// Класс для сохранения файла в PDF
+// РљР»Р°СЃСЃ РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ С„Р°Р№Р»Р° РІ PDF
 public class SaveAsPDF {
-    //создание нового документа
+    //СЃРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ РґРѕРєСѓРјРµРЅС‚Р°
     private Document document = new Document(PageSize.A4, 50, 50, 50, 50);
     private PdfPTable table = new  PdfPTable(14);
     private BaseFont font;
 
     private void createHeader() {
-        this.table.addCell(this.getPhrase("Имя"));
-        this.table.addCell(this.getPhrase("Фамилия"));
-        this.table.addCell(this.getPhrase("Отчество"));
-        this.table.addCell(this.getPhrase("Возрат"));
-        this.table.addCell(this.getPhrase("Пол"));
-        this.table.addCell(this.getPhrase("Дата рождения"));
-        this.table.addCell(this.getPhrase("Инн"));
-        this.table.addCell(this.getPhrase("Почтовый индекс"));
-        this.table.addCell(this.getPhrase("Страна"));
-        this.table.addCell(this.getPhrase("Область"));
-        this.table.addCell(this.getPhrase("Город"));
-        this.table.addCell(this.getPhrase("Улица"));
-        this.table.addCell(this.getPhrase("Дом"));
-        this.table.addCell(this.getPhrase("Квартира"));
+        this.table.addCell(this.getPhrase("РРјСЏ"));
+        this.table.addCell(this.getPhrase("Р¤Р°РјРёР»РёСЏ"));
+        this.table.addCell(this.getPhrase("РћС‚С‡РµСЃС‚РІРѕ"));
+        this.table.addCell(this.getPhrase("Р’РѕР·СЂР°С‚"));
+        this.table.addCell(this.getPhrase("РџРѕР»"));
+        this.table.addCell(this.getPhrase("Р”Р°С‚Р° СЂРѕР¶РґРµРЅРёСЏ"));
+        this.table.addCell(this.getPhrase("РРЅРЅ"));
+        this.table.addCell(this.getPhrase("РџРѕС‡С‚РѕРІС‹Р№ РёРЅРґРµРєСЃ"));
+        this.table.addCell(this.getPhrase("РЎС‚СЂР°РЅР°"));
+        this.table.addCell(this.getPhrase("РћР±Р»Р°СЃС‚СЊ"));
+        this.table.addCell(this.getPhrase("Р“РѕСЂРѕРґ"));
+        this.table.addCell(this.getPhrase("РЈР»РёС†Р°"));
+        this.table.addCell(this.getPhrase("Р”РѕРј"));
+        this.table.addCell(this.getPhrase("РљРІР°СЂС‚РёСЂР°"));
     }
 
     private void createBody(ArrayList<User> list) {
@@ -64,13 +64,13 @@ public class SaveAsPDF {
             this.document.open();
             this.document.add(this.table);
             this.document.close();
-            msg = "Файл создан. Путь:" +
+            msg = "Р¤Р°Р№Р» СЃРѕР·РґР°РЅ. РџСѓС‚СЊ:" +
                     ReadFiles.dir + File.separator + "File.pdf";
         } catch (DocumentException e) {
-            msg = "Ошибка создания pdf файла!";
+            msg = "РћС€РёР±РєР° СЃРѕР·РґР°РЅРёСЏ pdf С„Р°Р№Р»Р°!";
             System.out.print(e);
         } catch(IOException e) {
-            msg = "Ошибка создания pdf файла!";
+            msg = "РћС€РёР±РєР° СЃРѕР·РґР°РЅРёСЏ pdf С„Р°Р№Р»Р°!";
             System.out.print(e);
         }
         return msg;

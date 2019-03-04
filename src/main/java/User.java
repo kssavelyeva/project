@@ -111,7 +111,7 @@ public class User {
         return this.street;
     }
     String getSex() {
-        return this.sex ? "Ì" : "Æ";
+        return this.sex ? "Ðœ" : "Ð–";
     }
     int getAge() {
         return this.date.getAge();

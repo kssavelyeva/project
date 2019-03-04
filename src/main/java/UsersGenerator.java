@@ -31,7 +31,7 @@ public class UsersGenerator {
     }
 
     private void setUsers(int index) {
-            for(int i = 0; i < UsersGenerator.generateIndex(index)+30;  i++) { // i < UserGenerator.generateIndex(index); i > 34; (int)Math.random()*50
+            for(int i = 0; i < UsersGenerator.generateIndex(index)+30;  i++) {
             this.users.add(this.getUser());
         }
     }

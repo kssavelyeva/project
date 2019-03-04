@@ -9,24 +9,24 @@ import org.apache.poi.ss.usermodel.Row;
 
 public class SaveAsExel {
     HSSFWorkbook book 	= new HSSFWorkbook();
-    HSSFSheet sheet		= book.createSheet("Лист");
+    HSSFSheet sheet		= book.createSheet("Р›РёСЃС‚");
 
     void createHeader(){
         Row row = this.createRow(0);
-        row.createCell(0).setCellValue("Имя");
-        row.createCell(1).setCellValue("Фамилия");
-        row.createCell(2).setCellValue("Отчество");
-        row.createCell(3).setCellValue("Возрат");
-        row.createCell(4).setCellValue("Пол");
-        row.createCell(5).setCellValue("Дата рождения");
-        row.createCell(6).setCellValue("Инн");
-        row.createCell(7).setCellValue("Почтовый индекс");
-        row.createCell(8).setCellValue("Страна");
-        row.createCell(9).setCellValue("Область");
-        row.createCell(10).setCellValue("Город");
-        row.createCell(11).setCellValue("Улица");
-        row.createCell(12).setCellValue("Дом");
-        row.createCell(13).setCellValue("Квартира");
+        row.createCell(0).setCellValue("РРјСЏ");
+        row.createCell(1).setCellValue("Р¤Р°РјРёР»РёСЏ");
+        row.createCell(2).setCellValue("РћС‚С‡РµСЃС‚РІРѕ");
+        row.createCell(3).setCellValue("Р’РѕР·СЂР°С‚");
+        row.createCell(4).setCellValue("РџРѕР»");
+        row.createCell(5).setCellValue("Р”Р°С‚Р° СЂРѕР¶РґРµРЅРёСЏ");
+        row.createCell(6).setCellValue("РРЅРЅ");
+        row.createCell(7).setCellValue("РџРѕС‡С‚РѕРІС‹Р№ РёРЅРґРµРєСЃ");
+        row.createCell(8).setCellValue("РЎС‚СЂР°РЅР°");
+        row.createCell(9).setCellValue("РћР±Р»Р°СЃС‚СЊ");
+        row.createCell(10).setCellValue("Р“РѕСЂРѕРґ");
+        row.createCell(11).setCellValue("РЈР»РёС†Р°");
+        row.createCell(12).setCellValue("Р”РѕРј");
+        row.createCell(13).setCellValue("РљРІР°СЂС‚РёСЂР°");
     }
 
     private Row createRow(int index){
@@ -57,9 +57,9 @@ public class SaveAsExel {
         String msg = "";
         try (FileOutputStream out = new FileOutputStream(new File(ReadFiles.dir + File.separator + "File.xls"))) {
             this.book.write(out);
-            msg = "Файл создан. Путь: " + ReadFiles.dir + File.separator + "File.xls";
+            msg = "Р¤Р°Р№Р» СЃРѕР·РґР°РЅ. РџСѓС‚СЊ: " + ReadFiles.dir + File.separator + "File.xls";
         } catch (IOException e) {
-            msg = "Ошибка создания exel файла!";
+            msg = "РћС€РёР±РєР° СЃРѕР·РґР°РЅРёСЏ exel С„Р°Р№Р»Р°!";
         }
         return msg;
     }
