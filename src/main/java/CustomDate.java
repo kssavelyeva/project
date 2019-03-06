@@ -9,6 +9,9 @@ public class CustomDate {
     public CustomDate() {
         this.createDate();
     }
+    public CustomDate(String date) {
+        this.date = LocalDate.parse(date, DateTimeFormatter.ISO_DATE_TIME);
+    }
 
     public void createDate(){
         int minDay = (int) LocalDate.of(1900, 1, 1).toEpochDay();

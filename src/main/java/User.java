@@ -1,17 +1,17 @@
 public class User {
-    private String 		name;
-    private String 		fam;
-    private String 		otch;
-    private String 		city;
-    private String 		country;
-    private String 		region;
-    private String 		street;
-    private boolean 	sex;
-    private CustomDate 	date;
-    private long		inn;
-    private int 		postcode;
-    private int 		homeNumber;
-    private int 		roomNumber;
+    protected String 		name;
+    protected String 		fam;
+    protected String 		otch;
+    protected String 		city;
+    protected String 		country;
+    protected String 		region;
+    protected String 		street;
+    protected boolean 	sex;
+    protected CustomDate 	date;
+    protected long		inn;
+    protected int 		postcode;
+    protected int 		homeNumber;
+    protected int 		roomNumber;
 
     User setName(boolean sex, ReadFiles data) {
         this.name = sex

@@ -1,9 +1,18 @@
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.HttpClientBuilder;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 // Класс для чтения файлов txt
@@ -12,6 +21,7 @@ public class ReadFiles {
 
     static final String dir = new File("").getAbsolutePath() + File.separator + "src"
                         + File.separator + "main" + File.separator + "resources";
+    static final String url = "https://randomuser.me/api/";
 
     private Map<String, ArrayList<String>> dataList = new HashMap<String, ArrayList<String>>();//
 
@@ -58,5 +68,36 @@ public class ReadFiles {
 
     public String getListElm(String prop){
         return this.dataList.get(prop).get(UsersGenerator.generateIndex(this.dataList.get(prop).size()));
+    }
+
+    public ArrayList<User> getUsersByHttp(int count){
+        JsonNode json = this.getData(count);
+        if(json.get("results") != null) {
+            return this.convertToUser(json.get("results").elements());
+        } else {
+            return new ArrayList<User>();
+        }
+    }
+
+    private JsonNode getData(int count) {
+        try {
+            HttpResponse response = HttpClientBuilder.create().build().execute(new HttpGet(new URIBuilder(ReadFiles.url)
+                    .setParameter("results", String.valueOf(count))
+                    .build()));
+            return new ObjectMapper().readTree(response.getEntity().getContent());
+        } catch(Exception e) {
+            System.out.println("Ошибка получения данных от сервера!");
+            System.out.println("Генерация данных");
+            return JsonNodeFactory.instance.objectNode();
+        }
+
+    }
+
+    private ArrayList<User> convertToUser(Iterator<JsonNode> data) {
+        ArrayList<User> users = new ArrayList<User>();
+        while(data.hasNext()) {
+            users.add(UserFromApi.getUser(data.next()));
+        }
+        return users;
     }
 }

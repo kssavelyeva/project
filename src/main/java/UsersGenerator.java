@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class UsersGenerator {
     private SaveAsExel exel;
     private SaveAsPDF pdf;
@@ -31,12 +32,15 @@ public class UsersGenerator {
     }
 
     private void setUsers(int index) {
-            for(int i = 0; i < UsersGenerator.generateIndex(index)+30;  i++) {
-            this.users.add(this.getUser());
+        this.users = this.data.getUsersByHttp(generateIndex(index));
+        if (this.users.size() == 0) {
+            for (int i = 0; i < UsersGenerator.generateIndex(index) + 30; i++) {
+                this.users.add(this.getUser());
+            }
         }
     }
 
-    static int generateIndex(int count) {
-        return new Random().nextInt(count);
-}
-}
+        static int generateIndex(int count) {
+            return new Random().nextInt(count);
+        }
+    }
