@@ -20,10 +20,10 @@ public class DBIO {
     public DBIO() {
         try {
             this.connection = this.getConnection(ReadFiles.getProperties());
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println(ex);
-            System.out.println("Ошибка работы с базой данных");
+            System.out.println("Ошибка работы с бд!");
         }
     }
 
@@ -50,13 +50,13 @@ public class DBIO {
     }
 
     private ResultSet getSqlData(int start) throws SQLException {
-        PreparedStatement preparedStatemen =  this.connection.prepareStatement(this.getUserSql);
+        PreparedStatement preparedStatemen = this.connection.prepareStatement(this.getUserSql);
         preparedStatemen.setInt(1, start > this.getTableRows() - 30 ? start - (start - (this.getTableRows() - 30)) : start);
         return preparedStatemen.executeQuery();
     }
 
-    private void parseSqlData(ResultSet resultSet)  throws SQLException{
-        while(resultSet.next()){
+    private void parseSqlData(ResultSet resultSet) throws SQLException {
+        while (resultSet.next()) {
             this.usersList.add(
                     (User) new UserFromApi()
                             .setName(resultSet.getString("name"))
@@ -78,21 +78,21 @@ public class DBIO {
 
     public void saveUserToDb(ArrayList<User> users) {
         try {
-            for(User user : users) {
+            for (User user : users) {
                 this.addPerson(user);
             }
             this.connection.close();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println(ex);
-            System.out.println("Ошибка создания данных !");
+            System.out.println("Ошибка созранения данных!");
         }
 
     }
 
     private int addAddress(User user) throws SQLException {
         int id = 0;
-        String generatedKeys[]= {"id"};
+        String generatedKeys[] = {"id"};
         PreparedStatement preparedStatement = this.connection.prepareStatement(this.setAddresSql, generatedKeys);
         preparedStatement.setString(1, String.valueOf(user.getPostCode()));
         preparedStatement.setString(2, user.getCountry());
@@ -103,7 +103,7 @@ public class DBIO {
         preparedStatement.setString(7, String.valueOf(user.getRoomNumber()));
         preparedStatement.executeUpdate();
         ResultSet rs = preparedStatement.getGeneratedKeys();
-        while(rs.next()){
+        while (rs.next()) {
             id = rs.getInt(1);
         }
         return id;
@@ -114,7 +114,7 @@ public class DBIO {
         ResultSet result = this.connection.createStatement().executeQuery(
                 "Select * from persons where name =\"" + user.getName() + "\""
                         + " AND surname = \"" + user.getOtch() + "\""
-                        +" AND middlename = \"" + user.getFam() + "\""
+                        + " AND middlename = \"" + user.getFam() + "\""
         );
 
         int id = result.next() ? result.getInt("id") : 0;
@@ -135,7 +135,7 @@ public class DBIO {
         }
     }
 
-    private void updDate(User user, ResultSet dateFromDb) throws SQLException{
+    private void updDate(User user, ResultSet dateFromDb) throws SQLException {
         PreparedStatement address = this.connection.prepareStatement("UPDATE address set postcode = '?',"
                 + " country = '?', region = '?', city = '?', street = '?', house = '?', flat = '?' where id = ?");
         address.setString(1, String.valueOf(user.getPostCode()));
