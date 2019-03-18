@@ -85,7 +85,7 @@ public class DBIO {
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println(ex);
-            System.out.println("Ошибка созранения данных!");
+            System.out.println("Ошибка сохранения данных!");
         }
 
     }
