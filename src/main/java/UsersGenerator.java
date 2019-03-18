@@ -1,24 +1,24 @@
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 
 
 public class UsersGenerator {
     private SaveAsExel exel;
     private SaveAsPDF pdf;
-    private InnGenerator inn;
     private ReadFiles data;
+    private DBIO 	dbio;
 
     private ArrayList<User> users = new ArrayList<User>();
 
-    public UsersGenerator(SaveAsExel exel, InnGenerator inn, ReadFiles data, SaveAsPDF pdf) {
+    public UsersGenerator(SaveAsExel exel, ReadFiles data, SaveAsPDF pdf, DBIO dbio) {
         this.exel 	= exel;
-        this.inn 	= inn;
         this.data 	= data;
         this.pdf 	= pdf;
+        this.dbio 	= dbio;
     }
 
     public void run() {
-        this.setUsers(31 + (int) Math.random()*100);
+        this.setUsers(30);
         this.exel.createFile(this.users);
         this.pdf.createFile(this.users);
     }
@@ -32,9 +32,20 @@ public class UsersGenerator {
     }
 
     private void setUsers(int index) {
-        this.users = this.data.getUsersByHttp(generateIndex(index));
-        if (this.users.size() == 0) {
-            for (int i = 0; i < UsersGenerator.generateIndex(index) + 30; i++) {
+        this.users = this.data.getUsersByHttp(index);
+        if(this.users.size() != 0) {
+            this.dbio.saveUserToDb(this.users);
+        } else {
+            try {
+                this.users = this.dbio.getUserData(UsersGenerator.generateIndex(this.dbio.getTableRows()));
+            } catch(Exception ex) {
+                System.out.println("Ошибка получения данных их бд!");
+            }
+
+        }
+        if(this.users.size() == 0) {
+            System.out.println("Генерация из файлов");
+            for(int i = 0; i < UsersGenerator.generateIndex(index); i++) {
                 this.users.add(this.getUser());
             }
         }

@@ -1,29 +1,34 @@
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
+import java.io.InputStream;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
 // Класс для чтения файлов txt
 
 public class ReadFiles {
 
     static final String dir = new File("").getAbsolutePath() + File.separator + "src"
-                        + File.separator + "main" + File.separator + "resources";
-    static final String url = "https://randomuser.me/api/";
+            + File.separator + "main" + File.separator + "resources";
+    static final String endpoint = "https://randomuser.me/api/";
 
-    private Map<String, ArrayList<String>> dataList = new HashMap<String, ArrayList<String>>();//
+    private Map<String,  ArrayList<String>> dataList = new HashMap<String, ArrayList<String>>();
 
     private ArrayList<String> maleName 	= new ArrayList<String>();
     private ArrayList<String> womanName = new ArrayList<String>();
@@ -60,7 +65,7 @@ public class ReadFiles {
             }
         }
         catch(IOException ex){
-            System.out.println(fileName + " - ошибка чтения");
+            System.out.println(fileName + " - Ошибка чтения!");
 
         }
         return list;
@@ -81,13 +86,12 @@ public class ReadFiles {
 
     private JsonNode getData(int count) {
         try {
-            HttpResponse response = HttpClientBuilder.create().build().execute(new HttpGet(new URIBuilder(ReadFiles.url)
+            HttpResponse response = HttpClientBuilder.create().build().execute(new HttpGet(new URIBuilder(ReadFiles.endpoint)
                     .setParameter("results", String.valueOf(count))
                     .build()));
             return new ObjectMapper().readTree(response.getEntity().getContent());
         } catch(Exception e) {
-            System.out.println("Ошибка получения данных от сервера!");
-            System.out.println("Генерация данных");
+            System.out.println("Ошибка получения данных с сервера");
             return JsonNodeFactory.instance.objectNode();
         }
 
@@ -99,5 +103,15 @@ public class ReadFiles {
             users.add(UserFromApi.getUser(data.next()));
         }
         return users;
+    }
+
+    public static Properties getProperties() throws IOException{
+
+        Properties props = new Properties();
+        try(InputStream in = Files.newInputStream(Paths.get(ReadFiles.dir + File.separator + "database.properties"))){
+            props.load(in);
+        }
+
+        return props;
     }
 }

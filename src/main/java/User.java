@@ -131,4 +131,7 @@ public class User {
     int getRoomNumber() {
         return this.roomNumber;
     }
+    java.sql.Date getDateToDb() {
+        return this.date.toDb();
+    }
 }

@@ -1,5 +1,7 @@
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.util.Date;
+
 public class UserFromApi extends User{
     UserFromApi setName(String name) {
         this.name = name;
@@ -46,7 +48,15 @@ public class UserFromApi extends User{
         this.inn = new InnGenerator().getInn();
         return this;
     }
+    UserFromApi setInnCode(long inn) {
+        this.inn = inn;
+        return this;
+    }
     UserFromApi setDate(String data) {
+        this.date = new CustomDate(data);
+        return this;
+    }
+    UserFromApi setDate(Date data) {
         this.date = new CustomDate(data);
         return this;
     }
