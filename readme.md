@@ -24,9 +24,15 @@
 
 Данные о пользователях создаются либо из имеющихся в проекте данных, либо с помощью API (URL: https://randomuser.me/api/). Если отсутствует интернет-соединение, то приложение выводит сообщение: *Ошибка получения данных от сервера!* и создает два файла. 
 
+Данные о пользователях заносится в БД со структурой:
+address ( id int auto_increment not null, postcode varchar(256), country varchar(256), region varchar(256), city varchar(256), street varchar(256), house int, flat int, primary key (id) )
+
+persons ( id int auto_increment not null, surname varchar(256), name varchar(256), middlename varchar(256), birthday date, gender varchar(1), inn varchar(12), address_id int not null, foreign key (address_id) references address(id), primary key (id) )
+
 **Запуск проекта.**
 
-1.  Запустить командную строку от имени администратора.
+1.  В файле database.properties поменять: url, username, password, на данные своей БД.
+2.  Запустить командную строку от имени администратора.
 1. Перейти в папку с проектом при помощи комманды cd + путь. Пример: cd C:\Users\Карина\IdeaProjects\RandomPeopleGenerator
 1. Выполнить команду: mvn compile
 1. Выполнить команду: mvn exec:java -Dexec.mainClass="Generator"
